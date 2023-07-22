@@ -1,6 +1,8 @@
+import datetime
+
 from rest_framework import serializers
 
-from omac_app.models import AnimalType, Breed
+from omac_app.models import AnimalType, Breed, Animal
 
 
 class AnimalTypeSerializer(serializers.ModelSerializer):
@@ -25,3 +27,31 @@ class BreedSerializer(serializers.ModelSerializer):
             "name",
             "type",
         )
+
+
+class AnimalSerializer(serializers.ModelSerializer):
+    number = serializers.IntegerField()
+    sex = serializers.ChoiceField(choices=Animal.SEX_CHOICES)
+    nickname = serializers.CharField(max_length=50)
+    arrival_date = serializers.DateField()
+    arrival_age = serializers.IntegerField(min_value=0, max_value=25)
+    breed = serializers.PrimaryKeyRelatedField(queryset=Breed.objects.all())
+    parent = serializers.PrimaryKeyRelatedField(queryset=Animal.objects.all(), required=False)
+
+    class Meta:
+        model = Animal
+        fields = (
+            "id",
+            "number",
+            "sex",
+            "nickname",
+            "arrival_date",
+            "arrival_age",
+            "breed",
+            "parent",
+        )
+
+    def validate_number(self, value):
+        if self.instance is None and Animal.objects.filter(number=value).exists():  # only for create without update
+            raise serializers.ValidationError("This value already exists. Please choose a unique value.")
+        return value
