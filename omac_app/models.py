@@ -10,7 +10,7 @@ class AnimalType(models.Model):
 
 class Breed(models.Model):
     name = models.CharField(max_length=10)
-    type = models.OneToOneField(
+    type = models.ForeignKey(
         "AnimalType",
         on_delete=models.PROTECT,
     )
@@ -42,15 +42,5 @@ class Animal(models.Model):
         related_name='offspring',
     )
 
-# «Animal» содержит данные о животных –
-# инвентарный номер,
-# пол,
-# кличка,
-# дата прибытия,
-# возраст прибытия (в месяцах),
-# данные о породе животного,
-# данные об одном родителе(ссылка на другой экземпляр животного).
-#
-# Инвентарный номер не может повторяться.
-# «Weighting» содержит данные о взвешивании животного – животное, дата, вес в кг.
-# При условии, что у одного экземпляра животного не может быть 2 взвешивания в 1 дату.
+    def __str__(self):
+        return self.nickname
