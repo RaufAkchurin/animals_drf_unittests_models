@@ -70,7 +70,10 @@ class WeightingSerializer(serializers.ModelSerializer):
             "weight",
         )
 
-    # def validate_date(self, value):
-    #     if self.instance is None and Weighting.objects.filter(date=value).exists():  # only for create without update
-    #         raise serializers.ValidationError("One weighting per one day only")
-    #     return value
+    def validate(self, data):
+        animal = data.get('animal')
+        date = data.get('date')
+
+        if Weighting.objects.filter(animal=animal, date=date).exists():
+            raise serializers.ValidationError("One weighting to animal per day")
+        return data
