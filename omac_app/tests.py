@@ -75,7 +75,7 @@ class AnimalListTestCase(APITestCase):
 
         self.assertEqual(response.status_code, HTTP_400_BAD_REQUEST, response.data)
         self.assertEqual(response.data["inventory_num"][0],
-                         'This value already exists. Please choose a unique value.')
+                         'animal with this inventory num already exists.')
 
     def test_delete(self):
         self.assertEqual(Animal.objects.all().count(), 1)

@@ -6,8 +6,6 @@ from omac_app.models import AnimalType, Breed, Animal, Weighting
 
 
 class AnimalTypeSerializer(serializers.ModelSerializer):
-    name = serializers.CharField()
-
     class Meta:
         model = AnimalType
         fields = (
@@ -17,9 +15,6 @@ class AnimalTypeSerializer(serializers.ModelSerializer):
 
 
 class BreedSerializer(serializers.ModelSerializer):
-    name = serializers.CharField()
-    type = serializers.PrimaryKeyRelatedField(queryset=AnimalType.objects.all())
-
     class Meta:
         model = Breed
         fields = (
@@ -30,14 +25,6 @@ class BreedSerializer(serializers.ModelSerializer):
 
 
 class AnimalSerializer(serializers.ModelSerializer):
-    inventory_num = serializers.IntegerField()
-    sex = serializers.ChoiceField(choices=Animal.SEX_CHOICES)
-    nickname = serializers.CharField(max_length=50)
-    arrival_date = serializers.DateField()
-    arrival_age = serializers.IntegerField(min_value=0, max_value=25)
-    breed = serializers.PrimaryKeyRelatedField(queryset=Breed.objects.all())
-    parent = serializers.PrimaryKeyRelatedField(queryset=Animal.objects.all(), required=False)
-
     class Meta:
         model = Animal
         fields = (
@@ -58,10 +45,6 @@ class AnimalSerializer(serializers.ModelSerializer):
 
 
 class WeightingSerializer(serializers.ModelSerializer):
-    animal = serializers.PrimaryKeyRelatedField(queryset=Animal.objects.all())
-    date = serializers.DateField()
-    weight = serializers.IntegerField()
-
     class Meta:
         model = Weighting
         fields = (
