@@ -30,7 +30,7 @@ class BreedSerializer(serializers.ModelSerializer):
 
 
 class AnimalSerializer(serializers.ModelSerializer):
-    number = serializers.IntegerField()
+    inventory_num = serializers.IntegerField()
     sex = serializers.ChoiceField(choices=Animal.SEX_CHOICES)
     nickname = serializers.CharField(max_length=50)
     arrival_date = serializers.DateField()
@@ -42,7 +42,7 @@ class AnimalSerializer(serializers.ModelSerializer):
         model = Animal
         fields = (
             "id",
-            "number",
+            "inventory_num",
             "sex",
             "nickname",
             "arrival_date",
@@ -51,8 +51,8 @@ class AnimalSerializer(serializers.ModelSerializer):
             "parent",
         )
 
-    def validate_number(self, value):
-        if self.instance is None and Animal.objects.filter(number=value).exists():  # only for create without update
+    def validate_inventory_num(self, value):
+        if self.instance is None and Animal.objects.filter(inventory_num=value).exists():  # only for create without update
             raise serializers.ValidationError("This value already exists. Please choose a unique value.")
         return value
 

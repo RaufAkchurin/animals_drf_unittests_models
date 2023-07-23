@@ -25,7 +25,7 @@ class Animal(models.Model):
         ('F', 'Female'),
     )
 
-    number = models.IntegerField(unique=True)
+    inventory_num = models.IntegerField(unique=True)
     sex = models.CharField(max_length=1, choices=SEX_CHOICES)
     nickname = models.CharField(max_length=50)
     arrival_date = models.DateField()

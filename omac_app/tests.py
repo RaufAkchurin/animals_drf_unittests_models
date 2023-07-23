@@ -19,7 +19,7 @@ class AnimalListTestCase(APITestCase):
         )
 
         self.animal1 = Animal.objects.create(
-            number=11223,
+            inventory_num=11223,
             sex="F",
             nickname="aqaqaq",
             arrival_date="2023-07-12",
@@ -52,7 +52,7 @@ class AnimalListTestCase(APITestCase):
 
     def test_create(self):
         response = self.client.post(self.url, data={
-            "number": 112232,
+            "inventory_num": 112232,
             "sex": "F",
             "nickname": "aqaqaq",
             "arrival_date": "2023-07-12",
@@ -65,7 +65,7 @@ class AnimalListTestCase(APITestCase):
 
         # test_number_validation
         response = self.client.post(self.url, data={
-            "number": 112232,
+            "inventory_num": 112232,
             "sex": "F",
             "nickname": "aqaqaq",
             "arrival_date": "2023-07-12",
@@ -74,7 +74,7 @@ class AnimalListTestCase(APITestCase):
         })
 
         self.assertEqual(response.status_code, HTTP_400_BAD_REQUEST, response.data)
-        self.assertEqual(response.data["number"][0],
+        self.assertEqual(response.data["inventory_num"][0],
                          'This value already exists. Please choose a unique value.')
 
     def test_delete(self):
