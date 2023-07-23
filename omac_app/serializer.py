@@ -38,11 +38,6 @@ class AnimalSerializer(serializers.ModelSerializer):
             "parent",
         )
 
-    def validate_inventory_num(self, value):
-        if self.instance is None and Animal.objects.filter(inventory_num=value).exists():  # only for create without update
-            raise serializers.ValidationError("This value already exists. Please choose a unique value.")
-        return value
-
 
 class WeightingSerializer(serializers.ModelSerializer):
     class Meta:
