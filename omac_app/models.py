@@ -29,7 +29,7 @@ class Animal(models.Model):
     sex = models.CharField(max_length=1, choices=SEX_CHOICES)
     nickname = models.CharField(max_length=50)
     arrival_date = models.DateField()
-    arrival_age = models.IntegerField()
+    arrival_age = models.PositiveIntegerField()
     breed = models.ForeignKey(
         "Breed",
         on_delete=models.PROTECT,
@@ -44,3 +44,21 @@ class Animal(models.Model):
 
     def __str__(self):
         return self.nickname
+
+
+class Weighting(models.Model):
+    animal = models.ForeignKey(
+        "Animal",
+        on_delete=models.PROTECT,
+        null=True,
+    )
+    date = models.DateField()
+    weight = models.PositiveIntegerField()
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['animal', 'date'], name='unique_animal_weight_per_day')
+        ]
+
+    def __str__(self):
+        return f"{self.animal}-{self.weight}"

@@ -2,7 +2,7 @@ import datetime
 
 from rest_framework import serializers
 
-from omac_app.models import AnimalType, Breed, Animal
+from omac_app.models import AnimalType, Breed, Animal, Weighting
 
 
 class AnimalTypeSerializer(serializers.ModelSerializer):
@@ -55,3 +55,22 @@ class AnimalSerializer(serializers.ModelSerializer):
         if self.instance is None and Animal.objects.filter(number=value).exists():  # only for create without update
             raise serializers.ValidationError("This value already exists. Please choose a unique value.")
         return value
+
+
+class WeightingSerializer(serializers.ModelSerializer):
+    animal = serializers.PrimaryKeyRelatedField(queryset=Animal.objects.all())
+    date = serializers.DateField()
+    weight = serializers.IntegerField()
+
+    class Meta:
+        model = Weighting
+        fields = (
+            "animal",
+            "date",
+            "weight",
+        )
+
+    # def validate_date(self, value):
+    #     if self.instance is None and Weighting.objects.filter(date=value).exists():  # only for create without update
+    #         raise serializers.ValidationError("One weighting per one day only")
+    #     return value

@@ -1,6 +1,6 @@
 from django.urls import path
 
-from omac_app.views import TypeView, BreedView, AnimalView
+from omac_app.views import TypeView, BreedView, AnimalView, WeightingView
 
 urlpatterns = [
     path(
@@ -27,4 +27,13 @@ urlpatterns = [
         name="animal",
     ),
     path('omac/animal/<int:pk>/', AnimalView.as_view({'put': 'update', 'delete': 'destroy', 'get': 'retrieve'})),
+
+
+
+    path(
+        "omac/weighting",
+        WeightingView.as_view({'get': 'list', 'post': 'create', 'put': 'update'}),
+        name="weighting",
+    ),
+    path('omac/weighting/<int:pk>/', WeightingView.as_view({'put': 'update', 'delete': 'destroy', 'get': 'retrieve'})),
 ]

@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework import viewsets
 
-from omac_app.models import AnimalType, Breed, Animal
-from omac_app.serializer import AnimalTypeSerializer, BreedSerializer, AnimalSerializer
+from omac_app.models import AnimalType, Breed, Animal, Weighting
+from omac_app.serializer import AnimalTypeSerializer, BreedSerializer, AnimalSerializer, WeightingSerializer
 
 
 # Create your views here.
@@ -20,3 +20,8 @@ class BreedView(viewsets.ModelViewSet):
 class AnimalView(viewsets.ModelViewSet):
     serializer_class = AnimalSerializer
     queryset = Animal.objects.all()
+
+
+class WeightingView(viewsets.ModelViewSet):
+    serializer_class = WeightingSerializer
+    queryset = Weighting.objects.all()
